@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 04: Regla de Simpson</title>
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+
+  <style>
+    :root {
+      --bg-gradient: radial-gradient(circle at 50% -20%, #831843, #000000 80%);
+      --card-bg: rgba(20, 10, 15, 0.7);
+      --card-border: rgba(244, 114, 182, 0.2);
+      --accent: #f472b6;
+      --text: #fdf2f8;
+      --muted: #9d8b95;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg-gradient);
+      background-color: #000000;
+      color: var(--text);
+      padding: 3rem 1.5rem;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      max-width: 800px;
+      width: 100%;
+    }
+
+    a.back-btn {
+      display: inline-block;
+      color: #f472b6;
+      text-decoration: none;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      transition: transform 0.2s ease;
+    }
+
+    a.back-btn:hover {
+      transform: translateX(-4px);
+    }
+
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 2.5rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .badge {
+      background: rgba(219, 39, 119, 0.2);
+      color: #f472b6;
+      border: 1px solid rgba(244, 114, 182, 0.35);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: 2rem;
+      background: linear-gradient(135deg, #f472b6 0%, #ec4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 1rem 0;
+    }
+
+    .exercise {
+      background: rgba(10, 5, 8, 0.6);
+      padding: 1.25rem;
+      border-radius: 12px;
+      border-left: 4px solid #ec4899;
+      margin-top: 1.5rem;
+    }
+
+    h3 { color: #f472b6; margin-top: 0; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <a href="../index.html" class="back-btn">← Volver al Menú Principal</a>
+
+    <div class="card">
+      <span class="badge">Fase 1 Activa</span>
+      <h1>Módulo 04: Regla de Simpson</h1>
+      <p>Contenido oficial cargado en la plataforma:</p>
+      
+      $$S_n = \frac{\Delta x}{3} \left[ f(x_0) + 4f(x_1) + 2f(x_2) + \dots + f(x_n) \right]$$
+
+      <div class="exercise">
+        <h3>Ejercicio del Taller</h3>
+        <p>Aplica las reglas y fórmulas del módulo para la solución analítica.</p>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

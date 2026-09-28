@@ -1,0 +1,229 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plataforma Modular - Cálculo Integral</title>
+  
+  <!-- CDN KaTeX -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+          onload="renderMathInElement(document.body);"></script>
+
+  <style>
+    :root {
+      /* Fondo con degradado Rosa a Negro Profundo */
+      --bg-gradient: radial-gradient(circle at 50% -20%, #831843, #000000 80%);
+      --card-bg: rgba(20, 10, 15, 0.65);
+      --card-border: rgba(244, 114, 182, 0.15);
+      --accent: #f472b6;
+      --accent-glow: rgba(244, 114, 182, 0.3);
+      --text: #fdf2f8;
+      --muted: #9d8b95;
+      --disabled: rgba(30, 20, 25, 0.6);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg-gradient);
+      background-color: #000000;
+      color: var(--text);
+      padding: 3rem 1.5rem;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Header centrado */
+    header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+      animation: fadeInDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    header h1 {
+      font-size: 2.8rem;
+      /* Degradado Rosa Neón a Rosa Pastel */
+      background: linear-gradient(135deg, #f472b6 0%, #fb7185 50%, #ec4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0 0 0.5rem 0;
+      letter-spacing: -0.02em;
+    }
+
+    header p {
+      color: var(--muted);
+      font-size: 1.15rem;
+      margin: 0;
+    }
+
+    .container {
+      max-width: 1250px;
+      margin: 0 auto;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 1.75rem;
+    }
+
+    /* Tarjetas Glassmorphism con bordes rosados */
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+                  border-color 0.3s ease, 
+                  box-shadow 0.3s ease;
+    }
+
+    /* Brillo rosado intenso en Hover */
+    .card:hover:not(.locked) {
+      transform: translateY(-6px) scale(1.01);
+      border-color: rgba(244, 114, 182, 0.6);
+      box-shadow: 0 12px 30px -8px var(--accent-glow);
+    }
+
+    .card.locked {
+      background: rgba(10, 5, 8, 0.5);
+      opacity: 0.55;
+      border-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.3rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      letter-spacing: 0.03em;
+      align-self: flex-start;
+      text-transform: uppercase;
+    }
+
+    .badge-active {
+      background: rgba(219, 39, 119, 0.2);
+      color: #f472b6;
+      border: 1px solid rgba(244, 114, 182, 0.35);
+    }
+
+    .badge-locked {
+      background: rgba(50, 40, 45, 0.4);
+      color: #9d8b95;
+      border: 1px solid rgba(157, 139, 149, 0.2);
+    }
+
+    .card h3 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.2rem;
+      color: var(--text);
+    }
+
+    .card p {
+      font-size: 0.92rem;
+      color: var(--muted);
+      margin: 0 0 1.5rem 0;
+      line-height: 1.5;
+    }
+
+    /* Botón con degradado rosa */
+    .btn {
+      display: block;
+      text-align: center;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(236, 72, 153, 0.35);
+      transition: all 0.25s ease;
+    }
+
+    .btn:hover:not(.btn-disabled) {
+      filter: brightness(1.15);
+      box-shadow: 0 6px 20px rgba(236, 72, 153, 0.55);
+      transform: translateY(-1px);
+    }
+
+    .btn-disabled {
+      background: var(--disabled);
+      color: #64535d;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    /* Animaciones */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>Plataforma de Cálculo Integral</h1>
+      <p>Taller & Desarrollo de Software | $$\int_{a}^{b} f(x)\,dx$$</p>
+    </header>
+
+    <main class="grid">
+      <script>
+        const modules = [
+          { id: "01", name: "Módulo 1: Sumas de Riemann", phase: "Fase 1", active: true, desc: "Aproximación del área bajo la curva mediante particiones finitas." },
+          { id: "02", name: "Módulo 2: Regla del Trapecio", phase: "Fase 1", active: true, desc: "Método numérico de integración por aproximación trapezoidal." },
+          { id: "03", name: "Módulo 3: Regla del Punto Medio", phase: "Fase 1", active: true, desc: "Aproximación mediante el valor central de cada subintervalo." },
+          { id: "04", name: "Módulo 4: Regla de Simpson", phase: "Fase 1", active: true, desc: "Aproximación por parábolas (Regla de 1/3 y 3/8)." },
+          { id: "05", name: "Módulo 5: Integral Definida y Área", phase: "Fase 1", active: true, desc: "Cálculo analítico del área bajo la curva mediante límites e integrales." },
+          { id: "06", name: "Módulo 6: Integración Directa", phase: "Fase 1", active: true, desc: "Aplicación de fórmulas elementales y antiderivadas inmediatas." },
+          { id: "07", name: "Módulo 7: Sustitución (Potencias)", phase: "Próximamente - Fase 2/3", active: false, desc: "Integración por cambio de variable en expresiones de potencia." },
+          { id: "08", name: "Módulo 8: Integrales Exponenciales", phase: "Próximamente - Fase 2/3", active: false, desc: "Resolución de antiderivadas con base $e$ y bases generales $a^x$." },
+          { id: "09", name: "Módulo 9: Integrales Logarítmicas", phase: "Próximamente - Fase 2/3", active: false, desc: "Integrales que conducen a funciones logarítmicas naturales." },
+          { id: "10", name: "Módulo 10: Integrales Trigonométricas", phase: "Próximamente - Fase 2/3", active: false, desc: "Técnicas de integración para senos, cosenos y potencias trigonométricas." },
+          { id: "11", name: "Módulo 11: Trigonométricas Inversas", phase: "Próximamente - Fase 2/3", active: false, desc: "Integrales de la forma $\\frac{1}{\\sqrt{a^2-x^2}}$ y $\\frac{1}{a^2+x^2}$." },
+          { id: "12", name: "Módulo 12: Hiperbólicas Inversas", phase: "Próximamente - Fase 2/3", active: false, desc: "Resolución de formas cuadráticas vinculadas a funciones hiperbólicas." },
+          { id: "13", name: "Módulo 13: Trinomio $ax^2 + bx + c$", phase: "Próximamente - Fase 2/3", active: false, desc: "Completación de cuadrados aplicada a la integración cuadrática." },
+          { id: "14", name: "Módulo 14: Integración por Partes", phase: "Próximamente - Fase 2/3", active: false, desc: "Método basado en la regla del producto: $\\int u\\,dv = uv - \\int v\\,du$." }
+        ];
+
+        modules.forEach((mod, index) => {
+          const delay = (index * 0.05).toFixed(2);
+          document.write(`
+            <div class="card ${mod.active ? '' : 'locked'}" style="animation-delay: ${delay}s;">
+              <div>
+                <span class="badge ${mod.active ? 'badge-active' : 'badge-locked'}">${mod.phase}</span>
+                <h3>${mod.name}</h3>
+                <p>${mod.desc}</p>
+              </div>
+              <a href="modulo-${mod.id}/index.html" class="btn ${mod.active ? '' : 'btn-disabled'}">${mod.active ? 'Ingresar al Módulo' : 'Próximamente'}</a>
+            </div>
+          `);
+        });
+      </script>
+    </main>
+  </div>
+
+</body>
+</html>
