@@ -8,8 +8,7 @@
   <!-- CDN KaTeX -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-          onload="renderMathInElement(document.body);"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
 
   <style>
     :root {
@@ -46,7 +45,6 @@
 
     header h1 {
       font-size: 2.8rem;
-      /* Degradado Rosa Neón a Rosa Pastel */
       background: linear-gradient(135deg, #f472b6 0%, #fb7185 50%, #ec4899 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -168,6 +166,7 @@
       color: #64535d;
       box-shadow: none;
       cursor: not-allowed;
+      pointer-events: none;
     }
 
     /* Animaciones */
@@ -189,41 +188,51 @@
       <p>Taller & Desarrollo de Software | $$\int_{a}^{b} f(x)\,dx$$</p>
     </header>
 
-    <main class="grid">
-      <script>
-        const modules = [
-          { id: "01", name: "Módulo 1: Sumas de Riemann", phase: "Fase 1", active: true, desc: "Aproximación del área bajo la curva mediante particiones finitas." },
-          { id: "02", name: "Módulo 2: Regla del Trapecio", phase: "Fase 1", active: true, desc: "Método numérico de integración por aproximación trapezoidal." },
-          { id: "03", name: "Módulo 3: Regla del Punto Medio", phase: "Fase 1", active: true, desc: "Aproximación mediante el valor central de cada subintervalo." },
-          { id: "04", name: "Módulo 4: Regla de Simpson", phase: "Fase 1", active: true, desc: "Aproximación por parábolas (Regla de 1/3 y 3/8)." },
-          { id: "05", name: "Módulo 5: Integral Definida y Área", phase: "Fase 1", active: true, desc: "Cálculo analítico del área bajo la curva mediante límites e integrales." },
-          { id: "06", name: "Módulo 6: Integración Directa", phase: "Fase 1", active: true, desc: "Aplicación de fórmulas elementales y antiderivadas inmediatas." },
-          { id: "07", name: "Módulo 7: Sustitución (Potencias)", phase: "Próximamente - Fase 2/3", active: false, desc: "Integración por cambio de variable en expresiones de potencia." },
-          { id: "08", name: "Módulo 8: Integrales Exponenciales", phase: "Próximamente - Fase 2/3", active: false, desc: "Resolución de antiderivadas con base $e$ y bases generales $a^x$." },
-          { id: "09", name: "Módulo 9: Integrales Logarítmicas", phase: "Próximamente - Fase 2/3", active: false, desc: "Integrales que conducen a funciones logarítmicas naturales." },
-          { id: "10", name: "Módulo 10: Integrales Trigonométricas", phase: "Próximamente - Fase 2/3", active: false, desc: "Técnicas de integración para senos, cosenos y potencias trigonométricas." },
-          { id: "11", name: "Módulo 11: Trigonométricas Inversas", phase: "Próximamente - Fase 2/3", active: false, desc: "Integrales de la forma $\\frac{1}{\\sqrt{a^2-x^2}}$ y $\\frac{1}{a^2+x^2}$." },
-          { id: "12", name: "Módulo 12: Hiperbólicas Inversas", phase: "Próximamente - Fase 2/3", active: false, desc: "Resolución de formas cuadráticas vinculadas a funciones hiperbólicas." },
-          { id: "13", name: "Módulo 13: Trinomio $ax^2 + bx + c$", phase: "Próximamente - Fase 2/3", active: false, desc: "Completación de cuadrados aplicada a la integración cuadrática." },
-          { id: "14", name: "Módulo 14: Integración por Partes", phase: "Próximamente - Fase 2/3", active: false, desc: "Método basado en la regla del producto: $\\int u\\,dv = uv - \\int v\\,du$." }
-        ];
-
-        modules.forEach((mod, index) => {
-          const delay = (index * 0.05).toFixed(2);
-          document.write(`
-            <div class="card ${mod.active ? '' : 'locked'}" style="animation-delay: ${delay}s;">
-              <div>
-                <span class="badge ${mod.active ? 'badge-active' : 'badge-locked'}">${mod.phase}</span>
-                <h3>${mod.name}</h3>
-                <p>${mod.desc}</p>
-              </div>
-              <a href="modulo-${mod.id}/index.html" class="btn ${mod.active ? '' : 'btn-disabled'}">${mod.active ? 'Ingresar al Módulo' : 'Próximamente'}</a>
-            </div>
-          `);
-        });
-      </script>
-    </main>
+    <main class="grid" id="modules-grid"></main>
   </div>
+
+  <script>
+    const modules = [
+      { id: "01", name: "Módulo 1: Sumas de Riemann", phase: "Fase 1", active: true, desc: "Aproximación del área bajo la curva mediante particiones finitas." },
+      { id: "02", name: "Módulo 2: Regla del Trapecio", phase: "Fase 1", active: true, desc: "Método numérico de integración por aproximación trapezoidal." },
+      { id: "03", name: "Módulo 3: Regla del Punto Medio", phase: "Fase 1", active: true, desc: "Aproximación mediante el valor central de cada subintervalo." },
+      { id: "04", name: "Módulo 4: Regla de Simpson", phase: "Fase 1", active: true, desc: "Aproximación por parábolas (Regla de 1/3 y 3/8)." },
+      { id: "05", name: "Módulo 5: Integral Definida y Área", phase: "Fase 1", active: true, desc: "Cálculo analítico del área bajo la curva mediante límites e integrales." },
+      { id: "06", name: "Módulo 6: Integración Directa", phase: "Fase 1", active: true, desc: "Aplicación de fórmulas elementales y antiderivadas inmediatas." },
+      { id: "07", name: "Módulo 7: Sustitución Simple", phase: "Fase 2", active: true, desc: "Integración por cambio de variable $u = g(x)$ en potencias y funciones." },
+      { id: "08", name: "Módulo 8: Exponenciales y Logarítmicas", phase: "Fase 2", active: true, desc: "Antiderivadas con base $e$, bases $a^x$ y formas logarítmicas $\\ln|u|$." },
+      { id: "09", name: "Módulo 9: Integrales Trigonométricas", phase: "Fase 2", active: true, desc: "Técnicas de integración para senos, cosenos y potencias trigonométricas." },
+      { id: "10", name: "Módulo 10: Trigonométricas Inversas", phase: "Fase 2", active: true, desc: "Formas cuadráticas $\\frac{1}{\\sqrt{a^2-x^2}}$, $\\frac{1}{a^2+x^2}$ e hiperbólicas." },
+      { id: "11", name: "Módulo 11: Integración por Partes", phase: "Fase 2", active: true, desc: "Método basado en la regla del producto: $\\int u\\,dv = uv - \\int v\\,du$." },
+      { id: "12", name: "Módulo 12: Sólidos de Revolución", phase: "Fase 2", active: true, desc: "Volúmenes por discos, arandelas y secciones transversales conocidas." },
+      { id: "13", name: "Módulo 13: Longitud de Arco", phase: "Próximamente - Fase 3", active: false, desc: "Cálculo de la longitud exacta de curvas suaves $L = \\int_a^b \\sqrt{1+[f'(x)]^2}\\,dx$." },
+      { id: "14", name: "Módulo 14: Centroides y Trabajo", phase: "Próximamente - Fase 3", active: false, desc: "Aplicaciones físicas de la integral definida en centros de masa y fuerza." }
+    ];
+
+    const grid = document.getElementById('modules-grid');
+    modules.forEach((mod, index) => {
+      const delay = (index * 0.05).toFixed(2);
+      grid.innerHTML += `
+        <div class="card ${mod.active ? '' : 'locked'}" style="animation-delay: ${delay}s;">
+          <div>
+            <span class="badge ${mod.active ? 'badge-active' : 'badge-locked'}">${mod.phase}</span>
+            <h3>${mod.name}</h3>
+            <p>${mod.desc}</p>
+          </div>
+          <a href="modulo-${mod.id}/index.html" class="btn ${mod.active ? '' : 'btn-disabled'}">${mod.active ? 'Ingresar al Módulo' : 'Próximamente'}</a>
+        </div>
+      `;
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+      renderMathInElement(document.body, {
+        delimiters: [
+          {left: "$$", right: "$$", display: true},
+          {left: "$", right: "$", display: false}
+        ]
+      });
+    });
+  </script>
 
 </body>
 </html>
