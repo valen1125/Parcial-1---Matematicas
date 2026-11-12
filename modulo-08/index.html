@@ -3,94 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Próximamente - Fase 2/3</title>
+  <title>Módulo 08: Exponenciales y Logarítmicas</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
   <style>
-    :root {
-      --bg-gradient: radial-gradient(circle at 50% -20%, #831843, #000000 80%);
-      --card-bg: rgba(20, 10, 15, 0.7);
-      --card-border: rgba(244, 114, 182, 0.2);
-      --text: #fdf2f8;
-      --muted: #9d8b95;
-    }
-
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      background: var(--bg-gradient);
-      background-color: #000000;
-      color: var(--text);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      text-align: center;
-      padding: 1.5rem;
-    }
-
-    .box {
-      background: var(--card-bg);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      padding: 3rem 2rem;
-      border-radius: 20px;
-      border: 1px solid var(--card-border);
-      max-width: 420px;
-      width: 100%;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
-    }
-
-    .badge {
-      background: rgba(50, 40, 45, 0.5);
-      color: #9d8b95;
-      border: 1px solid rgba(157, 139, 149, 0.2);
-      padding: 0.35rem 0.85rem;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-
-    h1 {
-      font-size: 1.8rem;
-      background: linear-gradient(135deg, #f472b6 0%, #ec4899 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin: 1.5rem 0 0.5rem 0;
-    }
-
-    p {
-      color: var(--muted);
-      margin-bottom: 2rem;
-      line-height: 1.5;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 0.75rem 1.75rem;
-      background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
-      color: #ffffff;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: 700;
-      box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
-      transition: all 0.25s ease;
-    }
-
-    .btn:hover {
-      filter: brightness(1.15);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(236, 72, 153, 0.6);
-    }
+    :root { --bg-gradient: radial-gradient(circle at 50% -20%, #831843, #000000 80%); --card-bg: rgba(20, 10, 15, 0.72); --card-border: rgba(244, 114, 182, 0.22); --text: #fdf2f8; --muted: #cbd5e1; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg-gradient); background-color: #000; color: var(--text); padding: 2.5rem 1.5rem; min-height: 100vh; }
+    .container { max-width: 920px; margin: 0 auto; }
+    .back-btn { display: inline-block; margin-bottom: 1.5rem; padding: 0.6rem 1.2rem; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 0.9rem; background: rgba(244, 114, 182, 0.15); color: #f472b6; border: 1px solid rgba(244, 114, 182, 0.35); }
+    header h1 { font-size: 2.3rem; background: linear-gradient(135deg, #f472b6 0%, #fb7185 50%, #ec4899 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0 0 0.5rem 0; }
+    header p { color: #9d8b95; font-size: 1.05rem; margin-bottom: 2rem; }
+    .glass-box { background: var(--card-bg); backdrop-filter: blur(14px); border: 1px solid var(--card-border); border-radius: 16px; padding: 1.8rem; margin-bottom: 1.75rem; }
+    .glass-box h2 { color: #f472b6; margin-top: 0; font-size: 1.35rem; border-bottom: 1px solid rgba(244, 114, 182, 0.2); padding-bottom: 0.6rem; }
+    .formula-card { background: rgba(0, 0, 0, 0.45); border-left: 4px solid #ec4899; padding: 1rem 1.25rem; border-radius: 8px; margin: 1rem 0; overflow-x: auto; }
+    .step { margin: 0.8rem 0; line-height: 1.65; color: var(--muted); }
+    .result-badge { display: inline-block; margin-top: 0.5rem; padding: 0.45rem 1rem; border-radius: 8px; background: rgba(236, 72, 153, 0.2); border: 1px solid #f472b6; color: #fdf2f8; font-weight: 700; }
   </style>
 </head>
 <body>
-
-  <div class="box">
-    <span class="badge">En Desarrollo</span>
-    <h1>Próximamente - Fase 2/3</h1>
-    <p>Este módulo estará disponible en las siguientes fases del curso de Cálculo Integral.</p>
-    <a href="../index.html" class="btn">← Volver al Inicio</a>
+  <div class="container">
+    <a href="../index.html" class="back-btn">← Volver al Inicio</a>
+    <header>
+      <h1>Módulo 08: Exponenciales y Logarítmicas</h1>
+      <p>Antiderivadas con base $e$, bases generales $a^u$ y formas logarítmicas naturales.</p>
+    </header>
+    <section class="glass-box">
+      <h2>1. Fórmulas Fundamentales</h2>
+      <div class="formula-card">
+        $$\int e^u\,du = e^u + C \qquad \int a^u\,du = \frac{a^u}{\ln a} + C \qquad \int \frac{du}{u} = \ln|u| + C$$
+      </div>
+    </section>
+    <section class="glass-box">
+      <h2>2. Ejemplo Resuelto</h2>
+      <p class="step"><strong>Calcular:</strong> $\int \frac{3x^2}{x^3 + 5}\,dx$</p>
+      <div class="step"><strong>Paso 1 — Identificar el denominador:</strong> Sea $u = x^3 + 5$, su derivada es $du = 3x^2\,dx$.</div>
+      <div class="step"><strong>Paso 2 — Aplicar regla logarítmica:</strong>
+        <div class="formula-card">$$\int \frac{du}{u} = \ln|u| + C$$</div>
+        <span class="result-badge">Respuesta: $\ln|x^3 + 5| + C$</span>
+      </div>
+    </section>
   </div>
-
+  <script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, { delimiters: [{left: "$$", right: "$$", display: true}, {left: "$", right: "$", display: false}] }));</script>
 </body>
 </html>
